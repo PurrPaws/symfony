@@ -31,6 +31,10 @@ class Pet
     #[ORM\Column(length: 64)]
     private ?string $chipId = null;
 
+    #[ORM\ManyToOne(inversedBy: 'pets')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +108,18 @@ class Pet
     public function setChipId(string $chipId): static
     {
         $this->chipId = $chipId;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

@@ -22,6 +22,10 @@ class FillData
     #[ORM\Column]
     private ?bool $state = null;
 
+    #[ORM\ManyToOne(inversedBy: 'fillData')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?ObjectIot $objectIot = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -59,6 +63,18 @@ class FillData
     public function setState(bool $state): static
     {
         $this->state = $state;
+
+        return $this;
+    }
+
+    public function getObjectIot(): ?ObjectIot
+    {
+        return $this->objectIot;
+    }
+
+    public function setObjectIot(?ObjectIot $objectIot): static
+    {
+        $this->objectIot = $objectIot;
 
         return $this;
     }

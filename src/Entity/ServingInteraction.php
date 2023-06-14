@@ -16,6 +16,10 @@ class ServingInteraction
     #[ORM\Column]
     private ?int $postAmountChange = null;
 
+    #[ORM\ManyToOne(inversedBy: 'servingInteractions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Interaction $interaction = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +33,18 @@ class ServingInteraction
     public function setPostAmountChange(int $postAmountChange): static
     {
         $this->postAmountChange = $postAmountChange;
+
+        return $this;
+    }
+
+    public function getInteraction(): ?Interaction
+    {
+        return $this->interaction;
+    }
+
+    public function setInteraction(?Interaction $interaction): static
+    {
+        $this->interaction = $interaction;
 
         return $this;
     }

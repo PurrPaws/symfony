@@ -16,6 +16,10 @@ class RefillInteraction
     #[ORM\Column]
     private ?int $refillAmountSave = null;
 
+    #[ORM\ManyToOne(inversedBy: 'refillInteractions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Interaction $interaction = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +33,18 @@ class RefillInteraction
     public function setRefillAmountSave(int $refillAmountSave): static
     {
         $this->refillAmountSave = $refillAmountSave;
+
+        return $this;
+    }
+
+    public function getInteraction(): ?Interaction
+    {
+        return $this->interaction;
+    }
+
+    public function setInteraction(?Interaction $interaction): static
+    {
+        $this->interaction = $interaction;
 
         return $this;
     }

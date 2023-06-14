@@ -16,6 +16,10 @@ class DoorInteraction
     #[ORM\Column]
     private ?bool $doorState = null;
 
+    #[ORM\ManyToOne(inversedBy: 'doorInteractions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Interaction $interaction = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +33,18 @@ class DoorInteraction
     public function setDoorState(bool $doorState): static
     {
         $this->doorState = $doorState;
+
+        return $this;
+    }
+
+    public function getInteraction(): ?Interaction
+    {
+        return $this->interaction;
+    }
+
+    public function setInteraction(?Interaction $interaction): static
+    {
+        $this->interaction = $interaction;
 
         return $this;
     }

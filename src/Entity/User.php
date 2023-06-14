@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -29,6 +31,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 25)]
     private ?string $username = null;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ObjectIot::class)]
+    private Collection $objectIots;
+
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Pet::class)]
+    private Collection $pets;
+
+    public function __construct()
+    {
+        $this->objectIots = new ArrayCollection();
+        $this->pets = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -108,6 +122,66 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(string $username): static
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ObjectIot>
+     */
+    public function getObjectIots(): Collection
+    {
+        return $this->objectIots;
+    }
+
+    public function addObjectIot(ObjectIot $objectIot): static
+    {
+        if (!$this->objectIots->contains($objectIot)) {
+            $this->objectIots->add($objectIot);
+            $objectIot->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeObjectIot(ObjectIot $objectIot): static
+    {
+        if ($this->objectIots->removeElement($objectIot)) {
+            // set the owning side to null (unless already changed)
+            if ($objectIot->getUser() === $this) {
+                $objectIot->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Pet>
+     */
+    public function getPets(): Collection
+    {
+        return $this->pets;
+    }
+
+    public function addPet(Pet $pet): static
+    {
+        if (!$this->pets->contains($pet)) {
+            $this->pets->add($pet);
+            $pet->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePet(Pet $pet): static
+    {
+        if ($this->pets->removeElement($pet)) {
+            // set the owning side to null (unless already changed)
+            if ($pet->getUser() === $this) {
+                $pet->setUser(null);
+            }
+        }
 
         return $this;
     }
