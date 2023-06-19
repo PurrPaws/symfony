@@ -6,7 +6,7 @@ use App\Repository\TankInteractionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TankInteractionRepository::class)]
-class TankInteraction
+class TankInteraction extends Interaction
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

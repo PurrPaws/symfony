@@ -6,7 +6,7 @@ use App\Repository\RefillInteractionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: RefillInteractionRepository::class)]
-class RefillInteraction
+class RefillInteraction extends Interaction
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

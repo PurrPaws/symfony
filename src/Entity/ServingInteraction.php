@@ -6,7 +6,7 @@ use App\Repository\ServingInteractionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ServingInteractionRepository::class)]
-class ServingInteraction
+class ServingInteraction extends Interaction
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

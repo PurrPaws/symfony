@@ -6,7 +6,7 @@ use App\Repository\DoorInteractionRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: DoorInteractionRepository::class)]
-class DoorInteraction
+class DoorInteraction extends Interaction
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
